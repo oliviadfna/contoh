@@ -5,8 +5,7 @@ class ZakatEmasdanPerak extends Zakat{
     private double jumlahEmas_Gram;
     private double jumlahPerak_Gram;
 
-    public ZakatEmasdanPerak(int jumlahOrang, double jumlahEmas_Gram, double jumlahPerak_Gram) {
-        super(jumlahOrang);
+    public ZakatEmasdanPerak(double jumlahEmas_Gram, double jumlahPerak_Gram) {
         this.jumlahEmas_Gram = jumlahEmas_Gram;
         this.jumlahPerak_Gram = jumlahPerak_Gram;
     }
@@ -30,7 +29,7 @@ class ZakatEmasdanPerak extends Zakat{
 
     @Override
     public int hitungZakat() {
-        return PerhitunganZakat.hitungZakatEmasDanPerak(getJumlahOrang(), jumlahEmas_Gram, jumlahPerak_Gram,
+        return PerhitunganZakat.hitungZakatEmasDanPerak(jumlahEmas_Gram, jumlahPerak_Gram,
                 NISAB_PER_TAHUNN);
     }
 }

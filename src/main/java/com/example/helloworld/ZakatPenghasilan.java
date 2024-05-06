@@ -6,8 +6,7 @@ class ZakatPenghasilan extends Zakat {
     private double penghasilanPerBulan;
     private double penghasilanLain;
 
-    public ZakatPenghasilan(int jumlahOrang, double penghasilanPerBulan, double penghasilanLain) {
-        super(jumlahOrang);
+    public ZakatPenghasilan(double penghasilanPerBulan, double penghasilanLain) {
         this.penghasilanPerBulan = penghasilanPerBulan;
         this.penghasilanLain = penghasilanLain;
     }
@@ -30,7 +29,7 @@ class ZakatPenghasilan extends Zakat {
 
     @Override
     public int hitungZakat() {
-        return PerhitunganZakat.hitungZakatPenghasilan(getJumlahOrang(), penghasilanPerBulan, penghasilanLain,
+        return PerhitunganZakat.hitungZakatPenghasilan(penghasilanPerBulan, penghasilanLain,
                 NISAB_PER_BULAN, NISAB_PER_TAHUN);
     }
 }

@@ -8,7 +8,7 @@ class PerhitunganZakat {
         return (int) totalJumlahUang;
     }
 
-    public static int hitungZakatPenghasilan(int jumlahOrang, double penghasilanPerBulan, double penghasilanLain,
+    public static int hitungZakatPenghasilan(double penghasilanPerBulan, double penghasilanLain,
                                              double NISAB_PER_BULAN, double NISAB_PER_TAHUN) {
         double totalPenghasilanPerBulan = penghasilanPerBulan + penghasilanLain;
         if (totalPenghasilanPerBulan > NISAB_PER_BULAN) {
@@ -18,7 +18,7 @@ class PerhitunganZakat {
         }
     }
 
-    public static int hitungZakatEmasDanPerak(int jumlahOrang, double jumlahEmas_Gram, double jumlahPerak_Gram,
+    public static int hitungZakatEmasDanPerak(double jumlahEmas_Gram, double jumlahPerak_Gram,
                                               double NISAB_PER_TAHUNN) {
         double totalNilaiEmasPerak = (jumlahEmas_Gram * 1300000) + (jumlahPerak_Gram * 14000);
         if (totalNilaiEmasPerak > NISAB_PER_TAHUNN) {
@@ -28,7 +28,7 @@ class PerhitunganZakat {
         }
     }
 
-    public static int hitungZakatPertanian(int jumlahOrang, double hasilPanen, double NISAB_PER_TAHUNNN) {
+    public static int hitungZakatPertanian(double hasilPanen, double NISAB_PER_TAHUNNN) {
         if (hasilPanen > NISAB_PER_TAHUNNN) {
             return (int) (0.05 * hasilPanen);
         }else {
@@ -36,7 +36,7 @@ class PerhitunganZakat {
         }
     }
 
-    public static int hitungZakatPeternakan(int jumlahOrang, double jumlahKambingDanDomba, double jumlahSapi,
+    public static int hitungZakatPeternakan(double jumlahKambingDanDomba, double jumlahSapi,
                                             double NISAB_KAMBING_DOMBA, double NISAB_SAPI) {
         int zakatKambingDanDomba = 0;
         int zakatSapi = 0;

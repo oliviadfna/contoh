@@ -4,8 +4,7 @@ class ZakatPertanian extends Zakat {
     private static final double NISAB_PER_TAHUNNN = 750;
     private double hasilPanen;
 
-    public ZakatPertanian(int jumlahOrang, double hasilPanen) {
-        super(jumlahOrang);
+    public ZakatPertanian(double hasilPanen) {
         this.hasilPanen = hasilPanen;
     }
 
@@ -19,6 +18,6 @@ class ZakatPertanian extends Zakat {
 
     @Override
     public int hitungZakat() {
-        return PerhitunganZakat.hitungZakatPertanian(getJumlahOrang(), hasilPanen, NISAB_PER_TAHUNNN);
+        return PerhitunganZakat.hitungZakatPertanian(hasilPanen, NISAB_PER_TAHUNNN);
     }
 }
