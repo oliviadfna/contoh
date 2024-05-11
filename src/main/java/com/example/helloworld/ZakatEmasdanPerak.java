@@ -1,11 +1,14 @@
 package com.example.helloworld;
 
+import java.util.Date;
+
 class ZakatEmasdanPerak extends Zakat{
     private static final double NISAB_PER_TAHUNN = 82000000;
     private double jumlahEmas_Gram;
     private double jumlahPerak_Gram;
 
-    public ZakatEmasdanPerak(double jumlahEmas_Gram, double jumlahPerak_Gram) {
+    public ZakatEmasdanPerak(String nama, Date tanggal, double jumlahEmas_Gram, double jumlahPerak_Gram) {
+        super(nama,tanggal);
         this.jumlahEmas_Gram = jumlahEmas_Gram;
         this.jumlahPerak_Gram = jumlahPerak_Gram;
     }
@@ -26,10 +29,13 @@ class ZakatEmasdanPerak extends Zakat{
         this.jumlahPerak_Gram = jumlahPerak_Gram;
     }
 
-
     @Override
-    public int hitungZakat() {
-        return PerhitunganZakat.hitungZakatEmasDanPerak(jumlahEmas_Gram, jumlahPerak_Gram,
-                NISAB_PER_TAHUNN);
+    public int hitungZakat(){
+     double totalNilaiEmasPerak = (jumlahEmas_Gram * 1300000) + (jumlahPerak_Gram * 140000);
+     if (totalNilaiEmasPerak > NISAB_PER_TAHUNN) {
+         return (int) (0.025 * totalNilaiEmasPerak);
+     } else {
+         return 0;
+     }
     }
 }

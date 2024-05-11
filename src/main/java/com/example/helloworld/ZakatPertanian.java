@@ -1,10 +1,12 @@
 package com.example.helloworld;
+import java.util.Date;
 
 class ZakatPertanian extends Zakat {
     private static final double NISAB_PER_TAHUNNN = 750;
     private double hasilPanen;
 
-    public ZakatPertanian(double hasilPanen) {
+    public ZakatPertanian(String nama, Date tanggal, double hasilPanen) {
+        super(nama, tanggal);
         this.hasilPanen = hasilPanen;
     }
 
@@ -17,7 +19,11 @@ class ZakatPertanian extends Zakat {
     }
 
     @Override
-    public int hitungZakat() {
-        return PerhitunganZakat.hitungZakatPertanian(hasilPanen, NISAB_PER_TAHUNNN);
+    public int hitungZakat(){
+        if (hasilPanen > NISAB_PER_TAHUNNN) {
+            return (int) (0.05 * hasilPanen);
+        } else {
+            return 0;
+        }
     }
 }

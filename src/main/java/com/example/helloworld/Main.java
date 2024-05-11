@@ -1,229 +1,195 @@
 package com.example.helloworld;
-import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 import java.util.Date;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
-public class Main extends Application {
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-    @Override
-    public void start(Stage primaryStage) {
-        // Create UI components
-        Label titleLabel = new Label("Zakat Calculator");
+        System.out.println("Selamat datang di Program Zakat Calculator!");
 
-        // UI components for ZakatFitrahh
-        Label fitrahLabel = new Label("Jumlah Orang:");
-        TextField fitrahTextField = new TextField();
-        Button fitrahButton = new Button("Hitung Zakat Fitrah");
-        Label fitrahResultLabel = new Label();
+        // Meminta input dari pengguna untuk memilih jenis zakat
+        System.out.println("Pilih jenis zakat yang ingin dihitung:");
+        System.out.println("1. Zakat Fitrah");
+        System.out.println("2. Zakat Maal");
+        System.out.println("3. Riwayat Zakat");
 
-        // UI components for ZakatPenghasilan
-        Label bulanLabel = new Label("Penghasilan per Bulan:");
-        TextField bulanTextField = new TextField();
-        Label lainLabel = new Label("Penghasilan Lain:");
-        TextField lainTextField = new TextField();
-        Button penghasilanButton = new Button("Hitung Zakat Penghasilan");
-        Label penghasilanResultLabel = new Label();
+        int choice = 0;
+        boolean validChoice = false;
 
-        // UI components for Zakat Emas dan Perak
-        Label emasLabelGram = new Label("Jumlah Emas (gram):");
-        TextField emasTextField = new TextField();
-        Label perakLabelGram = new Label("Jumlah Perak (gram):");
-        TextField perakTextField = new TextField();
-        Button emasButton = new Button("Hitung Zakat Emas dan Perak");
-        Label emasResultLabel = new Label();
-
-        // UI components for Zakat Pertanian
-        Label hasilPanenLabel = new Label("Hasil Panen(Kg):");
-        TextField hasilPanenTextField = new TextField();
-        Button pertanianButton = new Button("Hitung Zakat Pertanian");
-        Label pertanianResultLabel = new Label();
-
-        // UI components for Zakat Peternakan
-        Label kambingLabel = new Label("Jumlah Kambing/Domba:");
-        TextField kambingTextField = new TextField();
-        Label sapiLabel = new Label("Jumlah Sapi:");
-        TextField sapiTextField = new TextField();
-        Button peternakanButton = new Button("Hitung Zakat Peternakan");
-        Label peternakanResultLabel = new Label();
-
-        // Button to open History Zakat window
-        Button historyButton = new Button("History Zakat");
-
-        // GridPane layout
-        GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(10));
-        gridPane.setHgap(5);
-        gridPane.setVgap(5);
-
-        // Add components to the GridPane
-        gridPane.add(titleLabel, 0, 0, 2, 1);
-
-        // Zakat Fitrah UI
-        gridPane.add(fitrahLabel, 0, 1);
-        gridPane.add(fitrahTextField, 1, 1);
-        gridPane.add(fitrahButton, 0, 2, 2, 1);
-        gridPane.add(fitrahResultLabel, 0, 3, 2, 1);
-
-        // Zakat Penghasilan UI
-        gridPane.add(bulanLabel, 0, 4);
-        gridPane.add(bulanTextField, 1, 4);
-        gridPane.add(lainLabel, 0, 5);
-        gridPane.add(lainTextField, 1, 5);
-        gridPane.add(penghasilanButton, 0, 6, 2, 1);
-        gridPane.add(penghasilanResultLabel, 0, 7, 2, 1);
-
-        // Zakat Emas dan Perak UI
-        gridPane.add(emasLabelGram, 0, 8);
-        gridPane.add(emasTextField, 1, 8);
-        gridPane.add(perakLabelGram, 0, 9);
-        gridPane.add(perakTextField, 1, 9);
-        gridPane.add(emasButton, 0, 10, 2, 1);
-        gridPane.add(emasResultLabel, 0, 11, 2, 1);
-
-        // Zakat Pertanian UI
-        gridPane.add(hasilPanenLabel, 0, 12);
-        gridPane.add(hasilPanenTextField, 1, 12);
-        gridPane.add(pertanianButton, 0, 13, 2, 1);
-        gridPane.add(pertanianResultLabel, 0, 14, 2, 1);
-
-        // Zakat Peternakan UI
-        gridPane.add(kambingLabel, 0, 15);
-        gridPane.add(kambingTextField, 1, 15);
-        gridPane.add(sapiLabel, 0, 16);
-        gridPane.add(sapiTextField, 1, 16);
-        gridPane.add(peternakanButton, 0, 17, 2, 1);
-        gridPane.add(peternakanResultLabel, 0, 18, 2, 1);
-
-        // Add History Zakat button
-        gridPane.add(historyButton, 0, 19, 2, 1);
-
-        // Event handler for History Zakat button
-        historyButton.setOnAction(event -> {
-            Stage historyStage = new Stage();
-            historyStage.setTitle("History Zakat");
-
-            // Create UI components for History Zakat window
-            Label nameLabel = new Label("Nama:");
-            TextField nameTextField = new TextField();
-            Label jenisZakatLabel = new Label("Jenis Zakat:");
-            TextField jenisZakatTextField = new TextField();
-            Label jumlahZakatLabel = new Label("Jumlah Zakat:");
-            TextField jumlahZakatTextField = new TextField();
-            Label tanggalLabel = new Label("Tanggal (YYYY-MM-DD):");
-            TextField tanggalTextField = new TextField();
-            Button saveButton = new Button("Simpan");
-
-            GridPane historyGridPane = new GridPane();
-            historyGridPane.setPadding(new Insets(10));
-            historyGridPane.setHgap(5);
-            historyGridPane.setVgap(5);
-
-            historyGridPane.add(nameLabel, 0, 0);
-            historyGridPane.add(nameTextField, 1, 0);
-            historyGridPane.add(jenisZakatLabel, 0, 1);
-            historyGridPane.add(jenisZakatTextField, 1, 1);
-            historyGridPane.add(jumlahZakatLabel, 0, 2);
-            historyGridPane.add(jumlahZakatTextField, 1, 2);
-            historyGridPane.add(tanggalLabel, 0, 3);
-            historyGridPane.add(tanggalTextField, 1, 3);
-            historyGridPane.add(saveButton, 0, 4, 2, 1);
-
-            Scene historyScene = new Scene(historyGridPane, 300, 200);
-            historyStage.setScene(historyScene);
-            historyStage.show();
-
-            // Event handler for save button
-            saveButton.setOnAction(saveEvent -> {
-                String name = nameTextField.getText();
-                String jenisZakat = jenisZakatTextField.getText();
-                int jumlahZakat = Integer.parseInt(jumlahZakatTextField.getText());
-                String tanggalStr = tanggalTextField.getText();
-                // Parse tanggalStr to Date
-                Date tanggal = null; // You need to implement parsing of the date string here
-                // Create HistoryZakat object and save it
-                HistoryZakat historyZakat = new HistoryZakat(name, tanggal, jenisZakat, jumlahZakat);
-                // Save the historyZakat object wherever you want (e.g., in a list or database)
-                System.out.println("Zakat transaction saved: " + historyZakat);
-                historyStage.close();
-            });
-        });
-
-        // Event handler for Zakat Fitrah button
-        fitrahButton.setOnAction(event -> {
+        // Melakukan loop hingga pilihan yang valid dimasukkan
+        while (!validChoice) {
             try {
-                int jumlahOrang = Integer.parseInt(fitrahTextField.getText());
-                ZakatFitrahh zakatFitrahh = new ZakatFitrahh(jumlahOrang);
-                int zakatAmount = zakatFitrahh.hitungZakat();
-                fitrahResultLabel.setText("Jumlah Zakat Fitrah: " + zakatAmount + " rupiah");
-            } catch (NumberFormatException e) {
-                fitrahResultLabel.setText("Masukkan data yang valid!");
+                System.out.print("Pilihan Anda [1]/[2]: ");
+                choice = scanner.nextInt();
+                validChoice = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Maaf, data yang dimasukkan salah, mohon periksa kembali!");
+                scanner.nextLine(); // Membersihkan buffer
             }
-        });
+        }
 
-        // Event handler for Zakat Penghasilan button
-        penghasilanButton.setOnAction(event -> {
-            try {
-                double penghasilanPerBulan = Double.parseDouble(bulanTextField.getText());
-                double penghasilanLain = Double.parseDouble(lainTextField.getText());
-                ZakatPenghasilan zakatPenghasilan = new ZakatPenghasilan(penghasilanPerBulan, penghasilanLain);
-                int zakatAmount = zakatPenghasilan.hitungZakat();
-                penghasilanResultLabel.setText("Jumlah Zakat Penghasilan: " + zakatAmount + " rupiah");
-            } catch (NumberFormatException e) {
-                penghasilanResultLabel.setText("Masukkan data yang valid!");
+        if (choice == 1) {
+            // Meminta input untuk zakat fitrah
+            System.out.print("Masukkan nama anda: ");
+            scanner.nextLine(); // Membersihkan buffer
+            String nama = scanner.nextLine();
+
+            System.out.println("Masukkan tanggal [DD/MM/YYYY]: ");
+            Date tanggal = inputDate();
+
+            int jumlahOrang = inputPositiveInteger("Masukkan jumlah orang dalam keluarga: ");
+
+            // Membuat objek ZakatFitrahh dan menghitung zakat
+            ZakatFitrahh zakatFitrah = new ZakatFitrahh(nama, tanggal, jumlahOrang);
+            int zakat = zakatFitrah.hitungZakat();
+
+            System.out.println("Jumlah zakat fitrah yang harus Anda bayar: Rp. " + zakat);
+        } else if (choice == 2) {
+            // Meminta input untuk zakat maal
+            System.out.println("Pilih jenis zakat maal yang ingin dihitung:");
+            System.out.println("1. Zakat Penghasilan");
+            System.out.println("2. Zakat Pertanian");
+            System.out.println("3. Zakat Peternakan");
+            System.out.println("4. Zakat Emas dan Perak");
+
+            int maalChoice = inputPositiveInteger("Pilihan Anda [1]/[2]/[3]/[4]: ");
+
+            System.out.println("Masukkan nama Anda: ");
+            scanner.nextLine(); // Membersihkan buffer
+            String nama = scanner.nextLine();
+
+            System.out.println("Masukkan tanggal [DD/MM/YYYY]: ");
+            Date tanggal = inputDate();
+
+            switch (maalChoice) {
+                case 1:
+                    double penghasilanPerBulan = inputPositiveDouble("Masukkan penghasilan per bulan: Rp. ");
+                    double penghasilanLain = inputPositiveDouble("Masukkan penghasilan lain (jika ada): Rp. ");
+
+                    // Membuat objek ZakatPenghasilan dan menghitung zakat
+                    ZakatPenghasilan zakatPenghasilan = new ZakatPenghasilan(nama, tanggal, penghasilanPerBulan, penghasilanLain);
+                    int zakatPenghasilanResult = zakatPenghasilan.hitungZakat();
+
+                    System.out.println("Jumlah zakat penghasilan yang harus Anda bayar: Rp. " + zakatPenghasilanResult);
+                    break;
+                case 2:
+                    double hasilPanenPertanian = inputPositiveDouble("Masukkan hasil panen (Kg): ");
+
+                    // Membuat objek ZakatPertanian dan menghitung zakat
+                    ZakatPertanian zakatPertanian = new ZakatPertanian(nama, tanggal, hasilPanenPertanian);
+                    int zakatPertanianResult = zakatPertanian.hitungZakat();
+
+                    System.out.println("Jumlah zakat pertanian yang harus Anda bayar: " + zakatPertanianResult + " Kg");
+                    break;
+                case 3:
+                    double jumlahKambingDanDomba = inputPositiveDouble("Masukkan jumlah kambing/domba (ekor): ");
+                    double jumlahSapi = inputPositiveDouble("Masukkan jumlah sapi (ekor): ");
+
+                    // Membuat objek ZakatPeternakan dan menghitung zakat
+                    ZakatPeternakan zakatPeternakan = new ZakatPeternakan(nama, tanggal, jumlahKambingDanDomba, jumlahSapi);
+                    int zakatPeternakanResult = zakatPeternakan.hitungZakat();
+
+                    System.out.println("Jumlah zakat peternakan yang harus Anda bayar: " + zakatPeternakanResult + " Ekor");
+                    break;
+                case 4:
+                    double jumlahEmas_Gram = inputPositiveDouble("Masukkan Jumlah Emas (gram): ");
+                    double jumlahPerak_Gram = inputPositiveDouble("Masukkan Jumlah Perak (gram): ");
+
+                    ZakatEmasdanPerak zakatEmasdanPerak = new ZakatEmasdanPerak(nama, tanggal, jumlahEmas_Gram, jumlahPerak_Gram);
+                    int zakatEmasdanPerakResult = zakatEmasdanPerak.hitungZakat();
+
+                    System.out.println("Jumlah zakat emas dan perak yang harus Anda bayar: " + zakatEmasdanPerakResult + " Gram");
+                    break;
+                default:
+                    System.out.println("Pilihan tidak valid!");
             }
-        });
+        } else {
+            System.out.println("Pilihan tidak valid!");
+        }
 
-        // Event handler for Zakat Emas dan Perak button
-        emasButton.setOnAction(event -> {
-            try {
-                double jumlahEmas = Double.parseDouble(emasTextField.getText());
-                double jumlahPerak = Double.parseDouble(perakTextField.getText());
-                ZakatEmasdanPerak zakatEmasdanPerak = new ZakatEmasdanPerak( jumlahEmas, jumlahPerak);
-                int zakatAmount = zakatEmasdanPerak.hitungZakat();
-                emasResultLabel.setText("Jumlah Zakat Emas dan Perak: " + zakatAmount + " rupiah");
-            } catch (NumberFormatException e) {
-                emasResultLabel.setText("Masukkan data yang valid!");
-            }
-        });
-
-        // Event handler for Zakat Pertanian button
-        pertanianButton.setOnAction(event -> {
-            try {
-                double hasilPanen = Double.parseDouble(hasilPanenTextField.getText());
-                ZakatPertanian zakatPertanian = new ZakatPertanian(hasilPanen);
-                int zakatAmount = zakatPertanian.hitungZakat();
-                pertanianResultLabel.setText("Jumlah Zakat Pertanian: " + zakatAmount + " Kg");
-            } catch (NumberFormatException e) {
-                pertanianResultLabel.setText("Masukkan data yang valid!");
-            }
-        });
-
-        // Event handler for Zakat Peternakan button
-        peternakanButton.setOnAction(event -> {
-            try {
-                double jumlahKambing = Double.parseDouble(kambingTextField.getText());
-                double jumlahSapi = Double.parseDouble(sapiTextField.getText());
-                ZakatPeternakan zakatPeternakan = new ZakatPeternakan(jumlahKambing, jumlahSapi);
-                int zakatAmount = zakatPeternakan.hitungZakat();
-                peternakanResultLabel.setText("Jumlah Zakat Peternakan: " + zakatAmount + " ekor");
-            } catch (NumberFormatException e) {
-                peternakanResultLabel.setText("Masukkan data yang valid!");
-            }
-        });
-
-        // Create the scene and set it on the stage
-        Scene scene = new Scene(gridPane, 400, 750);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Zakat Calculator");
-        primaryStage.show();
+        scanner.close();
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    // Method untuk meminta input tanggal dengan error handling
+    private static Date inputDate() {
+        Scanner scanner = new Scanner(System.in);
+        Date tanggal = null;
+        boolean inputValid = false;
+
+        // Melakukan loop hingga input valid
+        while (!inputValid) {
+            try {
+                String tanggalInput = scanner.nextLine();
+                tanggal = parseDate(tanggalInput);
+                inputValid = true;
+            } catch (Exception e) {
+                System.out.println("Maaf, data yang dimasukkan salah, mohon periksa kembali!");
+            }
+        }
+        return tanggal;
+    }
+
+    // Metode untuk mengonversi String menjadi objek Date
+    private static Date parseDate(String dateString) {
+        String[] parts = dateString.split("/");
+        int day = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]) - 1; // Mengurangi 1 karena bulan dimulai dari 0 di Java Date
+        int year = Integer.parseInt(parts[2]) - 1900; // Mengurangi 1900 karena Java Date dimulai dari tahun 1900
+        return new Date(year, month, day);
+    }
+
+    // Method untuk meminta input angka bulat positif dengan error handling
+    private static int inputPositiveInteger(String message) {
+        Scanner scanner = new Scanner(System.in);
+        int number = 0;
+        boolean inputValid = false;
+
+        // Melakukan loop hingga input valid
+        while (!inputValid) {
+            try {
+                System.out.print(message);
+                number = scanner.nextInt();
+
+                // Cek apakah angka positif
+                if (number < 0) {
+                    System.out.println("Maaf, data yang dimasukkan salah, mohon periksa kembali!");
+                } else {
+                    inputValid = true; // Keluar dari loop jika input valid
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Maaf, data yang dimasukkan salah, mohon periksa kembali!");
+                scanner.nextLine(); // Membersihkan buffer
+            }
+        }
+        return number;
+    }
+
+    // Method untuk meminta input angka positif dengan error handling
+    private static double inputPositiveDouble(String message) {
+        Scanner scanner = new Scanner(System.in);
+        double number = 0;
+        boolean inputValid = false;
+
+        // Melakukan loop hingga input valid
+        while (!inputValid) {
+            try {
+                System.out.print(message);
+                number = scanner.nextDouble();
+
+                // Cek apakah angka positif
+                if (number < 0) {
+                    System.out.println("Maaf, data yang dimasukkan salah, mohon periksa kembali!");
+                } else {
+                    inputValid = true; // Keluar dari loop jika input valid
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Maaf, data yang dimasukkan salah, mohon periksa kembali!");
+                scanner.nextLine(); // Membersihkan buffer
+            }
+        }
+        return number;
     }
 }
