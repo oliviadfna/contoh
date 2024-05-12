@@ -1,49 +1,33 @@
 package com.example.helloworld;
 
-import java.util.Date;
+import java.util.ArrayList;
 
-class HistoryZakat {
-    private String nama;
-    private Date tanggal;
-    private String jenisZakat;
-    private int jumlahZakat;
+public class HistoryZakat {
+    private ArrayList<Zakat> zakats = new ArrayList<>();
 
-    public HistoryZakat(String nama, Date tanggal, String jenisZakat, int jumlahZakat) {
-        this.nama = nama;
-        this.tanggal = tanggal;
-        this.jenisZakat = jenisZakat;
-        this.jumlahZakat = jumlahZakat;
+    public void addZakat(Zakat zakat) {
+        zakats.add(zakat);
+        System.out.println("Zakat added to history successfully!");
     }
 
-    public String getNama() {
-        return nama;
+    public void deleteZakat(String nama) {
+        zakats.removeIf(zakat -> zakat.getNama().equals(nama));
+        System.out.println("Contact deleted successfully!");
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
-    }
-
-    public Date getTanggal() {
-        return tanggal;
-    }
-
-    public void setTanggal(Date tanggal) {
-        this.tanggal = tanggal;
-    }
-
-    public String getJenisZakat() {
-        return jenisZakat;
-    }
-
-    public void setJenisZakat(String jenisZakat) {
-        this.jenisZakat = jenisZakat;
-    }
-
-    public int getJumlahZakat() {
-        return jumlahZakat;
-    }
-
-    public void setJumlahZakat(int jumlahZakat) {
-        this.jumlahZakat = jumlahZakat;
+    public boolean displayZakatDetails(String nama) {
+        boolean found = false;
+        for (Zakat zakat : zakats) {
+            if (zakat.getNama().equals(nama)) {
+                System.out.println("Nama: " + zakat.getNama());
+                System.out.println("Tanggal: " + zakat.getTanggal());
+                System.out.println("Jumlah zakat: " + zakat.hitungZakat());
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("history zakat tidak ditemukan!");
+        }
+        return found;
     }
 }

@@ -7,108 +7,150 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        HistoryZakat history = new HistoryZakat();
 
         System.out.println("Selamat datang di Program Zakat Calculator!");
 
-        // Meminta input dari pengguna untuk memilih jenis zakat
-        System.out.println("Pilih jenis zakat yang ingin dihitung:");
-        System.out.println("1. Zakat Fitrah");
-        System.out.println("2. Zakat Maal");
-        System.out.println("3. Riwayat Zakat");
+        boolean continueCalculating;
 
-        int choice = 0;
-        boolean validChoice = false;
+        do {
+            // Meminta input dari pengguna untuk memilih jenis zakat
+            System.out.println("Pilih jenis zakat yang ingin dihitung:");
+            System.out.println("1. Zakat Fitrah");
+            System.out.println("2. Zakat Maal");
+            System.out.println("3. Riwayat Zakat");
 
-        // Melakukan loop hingga pilihan yang valid dimasukkan
-        while (!validChoice) {
-            try {
-                System.out.print("Pilihan Anda [1]/[2]: ");
-                choice = scanner.nextInt();
-                validChoice = true;
-            } catch (InputMismatchException e) {
-                System.out.println("Maaf, data yang dimasukkan salah, mohon periksa kembali!");
+            int choice = 0;
+            boolean validChoice = false;
+
+            // Melakukan loop hingga pilihan yang valid dimasukkan
+            while (!validChoice) {
+                try {
+                    System.out.print("Pilihan Anda [1]/[2]/[3]: ");
+                    choice = scanner.nextInt();
+                    validChoice = true;
+                } catch (InputMismatchException e) {
+                    System.out.println("Maaf, data yang dimasukkan salah, mohon periksa kembali!");
+                    scanner.nextLine(); // Membersihkan buffer
+                }
+            }
+
+            if (choice == 1 || choice == 2) {
+                // Meminta input untuk zakat fitrah atau maal
+                System.out.print("Masukkan nama anda: ");
                 scanner.nextLine(); // Membersihkan buffer
+                String nama = scanner.nextLine();
+
+                System.out.println("Masukkan tanggal [DD/MM/YYYY]: ");
+                Date tanggal = inputDate();
+
+                if (choice == 1) {
+                    int jumlahOrang = inputPositiveInteger("Masukkan jumlah orang dalam keluarga: ");
+                    ZakatFitrahh zakatFitrah = new ZakatFitrahh(nama, tanggal, jumlahOrang);
+                    int zakat = zakatFitrah.hitungZakat();
+                    System.out.println("Jumlah zakat fitrah yang harus Anda bayar: Rp. " + zakat);
+                    history.addZakat(zakatFitrah);
+                } else if (choice == 2) {
+                    System.out.println("Pilih jenis zakat maal yang ingin dihitung:");
+                    System.out.println("1. Zakat Penghasilan");
+                    System.out.println("2. Zakat Pertanian");
+                    System.out.println("3. Zakat Peternakan");
+                    System.out.println("4. Zakat Emas dan Perak");
+                    int maalChoice = inputPositiveInteger("Pilihan Anda [1]/[2]/[3]/[4]: ");
+                    double jumlah = 0;
+
+                    switch (maalChoice) {
+                        case 1:
+                            double penghasilanPerBulan = inputPositiveDouble("Masukkan penghasilan per bulan: Rp. ");
+                            double penghasilanLain = inputPositiveDouble("Masukkan penghasilan lain (jika ada): Rp. ");
+                            ZakatPenghasilan zakatPenghasilan = new ZakatPenghasilan(nama, tanggal, penghasilanPerBulan, penghasilanLain);
+                            jumlah = zakatPenghasilan.hitungZakat();
+                            System.out.println("Jumlah zakat penghasilan yang harus Anda bayar: Rp. " + jumlah);
+                            history.addZakat(zakatPenghasilan);
+                            break;
+                        case 2:
+                            double hasilPanenPertanian = inputPositiveDouble("Masukkan hasil panen (Kg): ");
+                            ZakatPertanian zakatPertanian = new ZakatPertanian(nama, tanggal, hasilPanenPertanian);
+                            jumlah = zakatPertanian.hitungZakat();
+                            System.out.println("Jumlah zakat pertanian yang harus Anda bayar: " + jumlah + " Kg");
+                            history.addZakat(zakatPertanian);
+                            break;
+                        case 3:
+                            double jumlahKambingDanDomba = inputPositiveDouble("Masukkan jumlah kambing/domba (ekor): ");
+                            double jumlahSapi = inputPositiveDouble("Masukkan jumlah sapi (ekor): ");
+
+                            // Membuat objek ZakatPeternakan dan menghitung zakat
+                            ZakatPeternakan zakatPeternakan = new ZakatPeternakan(nama, tanggal, jumlahKambingDanDomba, jumlahSapi);
+                            jumlah = zakatPeternakan.hitungZakat();
+                            System.out.println("Jumlah zakat peternakan yang harus Anda bayar: " + jumlah + " Ekor");
+
+                            // Menyimpan riwayat zakat ke dalam HistoryZakat
+                            history.addZakat(zakatPeternakan);
+
+                            break;
+                        case 4:
+                            double jumlahEmas_Gram = inputPositiveDouble("Masukkan Jumlah Emas (gram): ");
+                            double jumlahPerak_Gram = inputPositiveDouble("Masukkan Jumlah Perak (gram): ");
+
+                            ZakatEmasdanPerak zakatEmasdanPerak = new ZakatEmasdanPerak(nama, tanggal, jumlahEmas_Gram, jumlahPerak_Gram);
+                            int zakatEmasdanPerakResult = zakatEmasdanPerak.hitungZakat();
+                            System.out.println("Jumlah zakat emas dan perak yang harus Anda bayar: Rp. " + zakatEmasdanPerakResult);
+
+                            // Menyimpan riwayat zakat ke dalam HistoryZakat
+                            history.addZakat(zakatEmasdanPerak);
+                            break;
+                        default:
+                            System.out.println("Pilihan tidak valid!");
+                    }
+                }
+            } else if (choice == 3) {
+                System.out.println("Menu Riwayat Zakat:");
+                System.out.println("1. View History");
+                System.out.println("2. Delete History");
+
+                int historyChoice = 0;
+                boolean validHistoryChoice = false;
+
+                while (!validHistoryChoice) {
+                    try {
+                        System.out.print("Pilihan Anda [1]/[2]: ");
+                        historyChoice = scanner.nextInt();
+                        validHistoryChoice = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("Maaf, data yang dimasukkan salah, mohon periksa kembali!");
+                        scanner.nextLine(); // Membersihkan buffer
+                    }
+                }
+
+                // Membersihkan buffer
+                scanner.nextLine();
+
+                switch (historyChoice) {
+                    case 1:
+                        // View History
+                        System.out.print("Masukkan nama untuk melihat riwayat zakat: ");
+                        String viewName = scanner.nextLine();
+                        history.displayZakatDetails(viewName);
+                        break;
+                    case 2:
+                        // Delete History
+                        System.out.print("Masukkan nama untuk menghapus riwayat zakat: ");
+                        String deleteName = scanner.nextLine();
+                        history.deleteZakat(deleteName);
+                        break;
+                    default:
+                        System.out.println("Pilihan tidak valid!");
+                }
+            } else {
+                System.out.println("Pilihan tidak valid!");
             }
-        }
 
-        if (choice == 1) {
-            // Meminta input untuk zakat fitrah
-            System.out.print("Masukkan nama anda: ");
-            scanner.nextLine(); // Membersihkan buffer
-            String nama = scanner.nextLine();
 
-            System.out.println("Masukkan tanggal [DD/MM/YYYY]: ");
-            Date tanggal = inputDate();
-
-            int jumlahOrang = inputPositiveInteger("Masukkan jumlah orang dalam keluarga: ");
-
-            // Membuat objek ZakatFitrahh dan menghitung zakat
-            ZakatFitrahh zakatFitrah = new ZakatFitrahh(nama, tanggal, jumlahOrang);
-            int zakat = zakatFitrah.hitungZakat();
-
-            System.out.println("Jumlah zakat fitrah yang harus Anda bayar: Rp. " + zakat);
-        } else if (choice == 2) {
-            // Meminta input untuk zakat maal
-            System.out.println("Pilih jenis zakat maal yang ingin dihitung:");
-            System.out.println("1. Zakat Penghasilan");
-            System.out.println("2. Zakat Pertanian");
-            System.out.println("3. Zakat Peternakan");
-            System.out.println("4. Zakat Emas dan Perak");
-
-            int maalChoice = inputPositiveInteger("Pilihan Anda [1]/[2]/[3]/[4]: ");
-
-            System.out.println("Masukkan nama Anda: ");
-            scanner.nextLine(); // Membersihkan buffer
-            String nama = scanner.nextLine();
-
-            System.out.println("Masukkan tanggal [DD/MM/YYYY]: ");
-            Date tanggal = inputDate();
-
-            switch (maalChoice) {
-                case 1:
-                    double penghasilanPerBulan = inputPositiveDouble("Masukkan penghasilan per bulan: Rp. ");
-                    double penghasilanLain = inputPositiveDouble("Masukkan penghasilan lain (jika ada): Rp. ");
-
-                    // Membuat objek ZakatPenghasilan dan menghitung zakat
-                    ZakatPenghasilan zakatPenghasilan = new ZakatPenghasilan(nama, tanggal, penghasilanPerBulan, penghasilanLain);
-                    int zakatPenghasilanResult = zakatPenghasilan.hitungZakat();
-
-                    System.out.println("Jumlah zakat penghasilan yang harus Anda bayar: Rp. " + zakatPenghasilanResult);
-                    break;
-                case 2:
-                    double hasilPanenPertanian = inputPositiveDouble("Masukkan hasil panen (Kg): ");
-
-                    // Membuat objek ZakatPertanian dan menghitung zakat
-                    ZakatPertanian zakatPertanian = new ZakatPertanian(nama, tanggal, hasilPanenPertanian);
-                    int zakatPertanianResult = zakatPertanian.hitungZakat();
-
-                    System.out.println("Jumlah zakat pertanian yang harus Anda bayar: " + zakatPertanianResult + " Kg");
-                    break;
-                case 3:
-                    double jumlahKambingDanDomba = inputPositiveDouble("Masukkan jumlah kambing/domba (ekor): ");
-                    double jumlahSapi = inputPositiveDouble("Masukkan jumlah sapi (ekor): ");
-
-                    // Membuat objek ZakatPeternakan dan menghitung zakat
-                    ZakatPeternakan zakatPeternakan = new ZakatPeternakan(nama, tanggal, jumlahKambingDanDomba, jumlahSapi);
-                    int zakatPeternakanResult = zakatPeternakan.hitungZakat();
-
-                    System.out.println("Jumlah zakat peternakan yang harus Anda bayar: " + zakatPeternakanResult + " Ekor");
-                    break;
-                case 4:
-                    double jumlahEmas_Gram = inputPositiveDouble("Masukkan Jumlah Emas (gram): ");
-                    double jumlahPerak_Gram = inputPositiveDouble("Masukkan Jumlah Perak (gram): ");
-
-                    ZakatEmasdanPerak zakatEmasdanPerak = new ZakatEmasdanPerak(nama, tanggal, jumlahEmas_Gram, jumlahPerak_Gram);
-                    int zakatEmasdanPerakResult = zakatEmasdanPerak.hitungZakat();
-
-                    System.out.println("Jumlah zakat emas dan perak yang harus Anda bayar: " + zakatEmasdanPerakResult + " Gram");
-                    break;
-                default:
-                    System.out.println("Pilihan tidak valid!");
-            }
-        } else {
-            System.out.println("Pilihan tidak valid!");
-        }
+            // Meminta input dari pengguna apakah ingin melakukan perhitungan lagi
+            System.out.print("Apakah Anda ingin melakukan perhitungan zakat lagi? (y/n): ");
+            char continueChar = scanner.next().charAt(0);
+            continueCalculating = (continueChar == 'y' || continueChar == 'Y');
+        } while (continueCalculating);
 
         scanner.close();
     }
