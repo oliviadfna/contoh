@@ -81,8 +81,10 @@ public class Main {
 
                             // Membuat objek ZakatPeternakan dan menghitung zakat
                             ZakatPeternakan zakatPeternakan = new ZakatPeternakan(nama, tanggal, jumlahKambingDanDomba, jumlahSapi);
-                            jumlah = zakatPeternakan.hitungZakat();
-                            System.out.println("Jumlah zakat peternakan yang harus Anda bayar: " + jumlah + " Ekor");
+                            int zakatKambingDanDombaResult = zakatPeternakan.hitungZakatKambingDomba();
+                            int zakatSapiResult = zakatPeternakan.hitungZakatSapi();
+                            System.out.println("Jumlah zakat peternakan kambing/domba yang harus Anda bayar: " + zakatKambingDanDombaResult + " Ekor");
+                            System.out.println("Jumlah zakat peternakan sapi yang harus Anda bayar: " + zakatSapiResult + " Ekor");
 
                             // Menyimpan riwayat zakat ke dalam HistoryZakat
                             history.addZakat(zakatPeternakan);
@@ -93,8 +95,10 @@ public class Main {
                             double jumlahPerak_Gram = inputPositiveDouble("Masukkan Jumlah Perak (gram): ");
 
                             ZakatEmasdanPerak zakatEmasdanPerak = new ZakatEmasdanPerak(nama, tanggal, jumlahEmas_Gram, jumlahPerak_Gram);
-                            int zakatEmasdanPerakResult = zakatEmasdanPerak.hitungZakat();
-                            System.out.println("Jumlah zakat emas dan perak yang harus Anda bayar: Rp. " + zakatEmasdanPerakResult);
+                            int zakatEmasResult = zakatEmasdanPerak.hitungZakatEmas();
+                            int zakatPerakResult = zakatEmasdanPerak.hitungZakatPerak();
+                            System.out.println("Jumlah zakat emas yang harus Anda bayar: " + zakatEmasResult + " gram");
+                            System.out.println("Jumlah zakat perak yang harus Anda bayar: " + zakatPerakResult + " gram");
 
                             // Menyimpan riwayat zakat ke dalam HistoryZakat
                             history.addZakat(zakatEmasdanPerak);
@@ -105,8 +109,8 @@ public class Main {
                 }
             } else if (choice == 3) {
                 System.out.println("Menu Riwayat Zakat:");
-                System.out.println("1. View History");
-                System.out.println("2. Delete History");
+                System.out.println("1. Lihat Riwayat Zakat");
+                System.out.println("2. Hapus Riwayat Zakat");
 
                 int historyChoice = 0;
                 boolean validHistoryChoice = false;

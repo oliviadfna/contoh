@@ -3,8 +3,8 @@ package com.example.helloworld;
 import java.util.Date;
 
 class ZakatPeternakan extends Zakat{
-    private static final double NISAB_KAMBING_DOMBA= 120;
-    private static final double NISAB_SAPI= 30;
+    private static final double nisabKambingDomba = 40;
+    private static final double nisabSapi = 30;
     private double jumlahKambingDanDomba;
     private double jumlahSapi;
 
@@ -31,18 +31,23 @@ class ZakatPeternakan extends Zakat{
     }
 
     @Override
-    public int hitungZakat(){
-        int zakatKambingDanDomba = 0;
-        int zakatSapi = 0;
-
-        //kambing
-        if (jumlahKambingDanDomba > NISAB_KAMBING_DOMBA){
-            zakatKambingDanDomba = (int) (jumlahKambingDanDomba / NISAB_KAMBING_DOMBA);
-        }
-        //sapi
-        if (jumlahSapi > NISAB_SAPI) {
-            zakatSapi = (int) (jumlahSapi / NISAB_SAPI);
-        }
+    public int hitungZakat() {
+        int zakatKambingDanDomba = hitungZakatKambingDomba();
+        int zakatSapi = hitungZakatSapi();
         return zakatKambingDanDomba + zakatSapi;
+    }
+    public int hitungZakatKambingDomba(){
+        if (jumlahKambingDanDomba > nisabKambingDomba){
+          return (int) (jumlahKambingDanDomba / nisabKambingDomba);
+        } else {
+          return 0;
+        }
+    }
+    public int hitungZakatSapi(){
+        if (jumlahSapi > nisabSapi) {
+            return (int) (jumlahSapi / nisabSapi);
+        } else {
+            return 0;
+        }
     }
 }
